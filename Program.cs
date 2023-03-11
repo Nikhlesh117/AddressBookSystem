@@ -6,6 +6,9 @@ namespace AddressBookSystem
 {
     public class Program
     {
+        private static readonly string firstName;
+        private static readonly string lastName;
+
         public static void Main(String[] args)
         {
             ContactManager contactManager = new ContactManager();
@@ -36,7 +39,28 @@ namespace AddressBookSystem
                 switch (choice)
                 {
                     case 1:
-                        contactManager.AddContact(bookName);
+                        Console.WriteLine("Enter First Name :");
+                        string firstName = Console.ReadLine();
+                        Console.WriteLine("Enter Last Name :");
+                        string lastName = Console.ReadLine();
+                        Contact temp = new Contact(firstName, lastName, null, null, null, null, null , null);
+                        if (contactManager.CheckDuplicateEntry(temp, bookName))
+                        {
+                            break;
+                        }
+                        Console.WriteLine("Enter Address :");
+                        string address = Console.ReadLine();
+                        Console.WriteLine("Enter City :");
+                        string city = Console.ReadLine();
+                        Console.WriteLine("Enter State :");
+                        string state = Console.ReadLine();
+                        Console.WriteLine("Enter Email :");
+                        string email = Console.ReadLine();
+                        Console.WriteLine("Enter Zip :");
+                        string zip = Console.ReadLine();
+                        Console.WriteLine("Enter Phone Number :");
+                        string phoneNumber = Console.ReadLine();
+                        contactManager.AddContact(firstName, lastName, address, city, state, email, zip, phoneNumber, bookName);
                         break;
                     case 2:
                         string nameToEdit = Console.ReadLine();

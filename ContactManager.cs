@@ -15,39 +15,11 @@ namespace AddressBookSystem
         private Dictionary<string, ContactManager> addressBookDictionary = new Dictionary<string, ContactManager>();
 
 
-        public void AddContact(string bookName)
+        public void AddContact(string firstName, string lastName, string address, string city, string state, string email, string zip, string phoneNumber, string bookName)
         {
-            Console.WriteLine("Add a new contact");
-            Console.WriteLine("-----------------");
-
-            Console.Write("First name: ");
-            string firstName = Console.ReadLine();
-
-            Console.Write("Last name: ");
-            string lastName = Console.ReadLine();
-
-            Console.Write("Address: ");
-            string address = Console.ReadLine();
-
-            Console.Write("City: ");
-            string city = Console.ReadLine();
-
-            Console.Write("State: ");
-            string state = Console.ReadLine();
-
-            Console.Write("Zip: ");
-            string zip = Console.ReadLine();
-
-            Console.Write("Phone number: ");
-            string phoneNumber = Console.ReadLine();
-
-            Console.Write("Email: ");
-            string email = Console.ReadLine();
-
-            Contact newContact = new Contact(firstName, lastName, address, city, state, zip, phoneNumber, email);
-            addressBookDictionary[bookName].contacts.Add(newContact.FirstName,newContact);
-
-            Console.WriteLine("Contact added successfully!");
+            Contact contact = new Contact(firstName, lastName, address, city, state, email, zip, phoneNumber);
+            addressBookDictionary[bookName].contacts.Add(contact.FirstName, contact);
+            Console.WriteLine("\nAdded Succesfully. \n");
         }
 
         public void ViewContact(string name, string bookName)
@@ -156,22 +128,24 @@ namespace AddressBookSystem
         {
             return addressBookDictionary;
         }
-        public void NoDuplicateEntry()
+        public List<Contact> GetListOfDictctionaryKeys(string bookName)
         {
-            List<Contact> addresses = new List<Contact>();
-            Console.WriteLine("Enter name to check duplicate name or not");
-            string firstname = Console.ReadLine();
-            foreach (var data in addressBookDictionary)
+            List<Contact> book = new List<Contact>();
+            foreach (var value in addressBookDictionary[bookName].contacts.Values)
             {
-                if (data.FirstName == firstname)
-                {
-                    Console.WriteLine("Addrss already Present");
-                }
-                else
-                {
-                    AddContact();
-                }
+                book.Add(value);
             }
+            return book;
+        }
+        public bool CheckDuplicateEntry(Contact c, string bookName)
+        {
+            List<Contact> book = GetListOfDictctionaryKeys(bookName);
+            if (book.Any(b => b.Equals(c)))
+            {
+                Console.WriteLine("Name already Exists.");
+                return true;
+            }
+            return false;
         }
 
     }
